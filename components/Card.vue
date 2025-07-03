@@ -61,32 +61,63 @@ onMounted(async () => {
 
 <template>
   <div class="p-6">
-    <div v-for="activity in activities" :key="activity.id"
-      class="relative bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-md">
-      <button @click="openUpdateModal(activity)"
-        class="absolute top-3 right-3 bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-md">
-        Update
-      </button>
-      <button @click="deleteActivity(activity.id)"
-        class="absolute top-3 left-3 bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-md">
-        Delete
-      </button>
+    <!-- Card layout -->
+    <div
+      v-for="activity in activities"
+      :key="activity.id"
+      class="relative bg-white border border-gray-100 rounded-2xl p-6 mb-6 shadow-sm hover:shadow-md transition"
+    >
+      <!-- ปุ่ม Action ด้านขวาบน -->
+      <div class="absolute top-3 right-3 flex gap-2">
+        <button
+          @click="openUpdateModal(activity)"
+          class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition"
+        >
+          ✏️ Update
+        </button>
+        <button
+          @click="deleteActivity(activity.id)"
+          class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full shadow-sm transition"
+        >
+          🗑 Delete
+        </button>
+      </div>
 
-      <div class="space-y-2">
-        <p class="text-lg font-semibold text-gray-800">{{ activity.name }}</p>
-        <p class="text-sm text-gray-500">Created: {{ formatDateTime(activity.created_at) }}</p>
-        <p class="text-sm text-gray-500">Release Date: {{ formatDateTime(activity.release_date) }}</p>
-        <p class="text-gray-700">{{ activity.description }}</p>
+      <!-- Content -->
+      <div class="space-y-2 mt-12">
+        <p class="text-xl font-bold text-gray-900 tracking-tight leading-tight">
+          📝 {{ activity.name }}
+        </p>
+
+        <div class="text-sm text-gray-500 space-y-1">
+          <p>
+            📅 <span class="font-medium text-gray-700">Created:</span>
+            {{ formatDateTime(activity.created_at) }}
+          </p>
+          <p>
+            📆 <span class="font-medium text-gray-700">Release Date:</span>
+            {{ formatDateTime(activity.release_date) }}
+          </p>
+        </div>
+
+        <p class="text-gray-700 text-sm leading-relaxed mt-2">
+          📣 {{ activity.description }}
+        </p>
       </div>
     </div>
 
+
+
     <div class="text-center mt-8">
       <NuxtLink to="/create">
-        <button class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-3 rounded-xl text-lg">
-          Create
+        <button
+          class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-lg font-medium shadow-md transition"
+        >
+          ➕ Create Activity
         </button>
       </NuxtLink>
     </div>
+
 
     <!-- ✅ Modal -->
     <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
